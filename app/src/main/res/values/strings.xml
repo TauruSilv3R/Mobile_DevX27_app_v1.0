@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DevX27</string>
+    <string name="tab_dashboard">Dashboard</string>
+    <string name="tab_practice">Practice</string>
+    <string name="tab_compete">Compete</string>
+    <string name="tab_leaderboard">Leaderboard</string>
+    <string name="tab_profile">Profile</string>
+    <string name="xp_label">XP</string>
+    <string name="level_label">Level</string>
+    <string name="streak_label">Streak</string>
+    <string name="solved_label">Solved</string>
+    <string name="rank_label">Rank</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="find_match">Find Match</string>
+    <string name="join_tournament">Join Tournament</string>
+</resources>

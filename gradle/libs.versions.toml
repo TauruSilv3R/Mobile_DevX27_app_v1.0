@@ -1,0 +1,80 @@
+[versions]
+agp                     = "8.4.2"
+kotlin                  = "2.0.0"
+ksp                     = "2.0.0-1.0.22"
+coreKtx                 = "1.13.1"
+lifecycleRuntimeKtx     = "2.8.2"
+activityCompose         = "1.9.0"
+composeBom              = "2024.06.00"
+composeNavigation       = "2.7.7"
+hilt                    = "2.51.1"
+hiltNavigationCompose   = "1.2.0"
+firebaseBom             = "33.1.1"
+coroutines              = "1.8.1"
+serialization           = "1.7.0"
+splashscreen            = "1.0.1"
+coil                    = "2.7.0"
+codeEditor              = "1.0.0-rc10"
+room                    = "2.6.1"
+datastore               = "1.1.1"
+
+[libraries]
+# AndroidX Core
+androidx-core-ktx              = { group = "androidx.core",     name = "core-ktx",                  version.ref = "coreKtx" }
+androidx-lifecycle-runtime     = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx",     version.ref = "lifecycleRuntimeKtx" }
+androidx-activity-compose      = { group = "androidx.activity",  name = "activity-compose",          version.ref = "activityCompose" }
+androidx-splashscreen           = { group = "androidx.core",     name = "core-splashscreen",          version.ref = "splashscreen" }
+
+# Compose BOM + UI
+androidx-compose-bom           = { group = "androidx.compose",  name = "compose-bom",               version.ref = "composeBom" }
+androidx-compose-ui            = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics   = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-tooling    = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-material3     = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+
+# Navigation
+androidx-navigation-compose    = { group = "androidx.navigation", name = "navigation-compose",       version.ref = "composeNavigation" }
+
+# Hilt DI
+hilt-android                   = { group = "com.google.dagger", name = "hilt-android",              version.ref = "hilt" }
+hilt-compiler                  = { group = "com.google.dagger", name = "hilt-android-compiler",     version.ref = "hilt" }
+hilt-navigation-compose        = { group = "androidx.hilt",    name = "hilt-navigation-compose",    version.ref = "hiltNavigationCompose" }
+
+# Firebase BOM
+firebase-bom                   = { group = "com.google.firebase", name = "firebase-bom",            version.ref = "firebaseBom" }
+firebase-auth-ktx              = { group = "com.google.firebase", name = "firebase-auth-ktx" }
+firebase-firestore-ktx         = { group = "com.google.firebase", name = "firebase-firestore-ktx" }
+firebase-functions-ktx         = { group = "com.google.firebase", name = "firebase-functions-ktx" }
+firebase-analytics-ktx         = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+
+# Coroutines
+kotlinx-coroutines-android     = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlinx-coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines" }
+
+# Serialization
+kotlinx-serialization-json     = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+
+# Image loading
+coil-compose                   = { group = "io.coil-kt",        name = "coil-compose",              version.ref = "coil" }
+
+# Code editor (compose-code-editor by Wakaztahir — native Compose, no WebView)
+compose-code-editor            = { group = "io.github.wakaztahir", name = "compose-code-editor",       version.ref = "codeEditor" }
+
+# Room
+androidx-room-runtime          = { group = "androidx.room",     name = "room-runtime",              version.ref = "room" }
+androidx-room-ktx              = { group = "androidx.room",     name = "room-ktx",                  version.ref = "room" }
+androidx-room-compiler         = { group = "androidx.room",     name = "room-compiler",             version.ref = "room" }
+
+# DataStore
+androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+
+[plugins]
+android-application            = { id = "com.android.application",               version.ref = "agp" }
+kotlin-android                 = { id = "org.jetbrains.kotlin.android",           version.ref = "kotlin" }
+kotlin-compose                 = { id = "org.jetbrains.kotlin.plugin.compose",    version.ref = "kotlin" }
+kotlin-serialization           = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp                            = { id = "com.google.devtools.ksp",                version.ref = "ksp" }
+hilt                           = { id = "com.google.dagger.hilt.android",         version.ref = "hilt" }
+google-services                = { id = "com.google.gms.google-services",         version = "4.4.2" }
