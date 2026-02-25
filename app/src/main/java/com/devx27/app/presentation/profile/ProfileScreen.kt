@@ -22,6 +22,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Error
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Language
@@ -74,8 +75,8 @@ fun ProfileScreen(
             uiState.stats?.let {
                 ProfileHeader(
                     profile = it.profile,
-                    onSignOut = viewModel::signOut,
-                    onSettings = { navController.navigate(com.devx27.app.presentation.navigation.Screen.Settings.route) }
+                    onSettings = { navController.navigate(com.devx27.app.presentation.navigation.Screen.Settings.route) },
+                    onEdit = { navController.navigate(com.devx27.app.presentation.navigation.Screen.EditProfile.route) }
                 )
             }
         }
@@ -113,7 +114,7 @@ fun ProfileScreen(
 // Profile Header — Avatar initials + name + email + sign-out
 // ─────────────────────────────────────────────────────────────────────────────
 @Composable
-private fun ProfileHeader(profile: UserProfile, onSignOut: () -> Unit, onSettings: () -> Unit) {
+private fun ProfileHeader(profile: UserProfile, onSettings: () -> Unit, onEdit: () -> Unit) {
     Row(
         modifier              = Modifier.fillMaxWidth(),
         verticalAlignment     = Alignment.CenterVertically,
@@ -161,11 +162,11 @@ private fun ProfileHeader(profile: UserProfile, onSignOut: () -> Unit, onSetting
             }
         }
         Row {
+            IconButton(onClick = onEdit) {
+                Icon(Icons.Default.Edit, "Edit profile", tint = DevX27Theme.colors.onSurfaceMuted)
+            }
             IconButton(onClick = onSettings) {
                 Icon(Icons.Default.Settings, "Settings", tint = DevX27Theme.colors.onSurfaceMuted)
-            }
-            IconButton(onClick = onSignOut) {
-                Icon(Icons.Default.Logout, "Sign out", tint = DevX27Theme.colors.onSurfaceMuted)
             }
         }
     }

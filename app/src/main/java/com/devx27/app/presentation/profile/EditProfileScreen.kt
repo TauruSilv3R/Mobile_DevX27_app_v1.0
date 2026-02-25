@@ -205,6 +205,11 @@ private fun ProfileField(
             unfocusedBorderColor = DevX27Theme.colors.divider,
             focusedContainerColor = DevX27Theme.colors.surface,
             unfocusedContainerColor = DevX27Theme.colors.surface,
+            focusedLabelColor = DevX27Theme.colors.onBackground,
+            unfocusedLabelColor = DevX27Theme.colors.onSurfaceMuted,
+            cursorColor = DevX27Theme.colors.actionColor,
+            focusedPlaceholderColor = DevX27Theme.colors.onSurfaceSubtle,
+            unfocusedPlaceholderColor = DevX27Theme.colors.onSurfaceSubtle,
         ),
         singleLine = true,
     )
@@ -234,6 +239,11 @@ private fun ProfileFieldMultiline(
             unfocusedBorderColor = DevX27Theme.colors.divider,
             focusedContainerColor = DevX27Theme.colors.surface,
             unfocusedContainerColor = DevX27Theme.colors.surface,
+            focusedLabelColor = DevX27Theme.colors.onBackground,
+            unfocusedLabelColor = DevX27Theme.colors.onSurfaceMuted,
+            cursorColor = DevX27Theme.colors.actionColor,
+            focusedPlaceholderColor = DevX27Theme.colors.onSurfaceSubtle,
+            unfocusedPlaceholderColor = DevX27Theme.colors.onSurfaceSubtle,
         ),
     )
 }

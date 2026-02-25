@@ -89,29 +89,46 @@ fun SettingsScreen(
                     )
                 }
                 item {
-                    ToggleSettingItem(
-                        title = "Haptic Feedback",
-                        subtitle = "Vibrate on interactions",
-                        icon = Icons.Default.Vibration,
-                        isEnabled = settings.hapticsEnabled,
-                        onCheckedChange = viewModel::setHapticsEnabled
+                    SettingSectionHeader("Code Editor")
+                }
+                item {
+                    ActionSettingItem(
+                        title = "Code Editor Settings",
+                        icon = Icons.Default.Code,
+                        onClick = { navController.navigate(com.devx27.app.presentation.navigation.Screen.CodeEditorSettings.route) }
                     )
                 }
 
                 item { Spacer(Modifier.height(8.dp)) }
-                item { SettingSectionHeader("Account") }
+                item { SettingSectionHeader("App") }
                 item {
                     ActionSettingItem(
-                        title = "Edit Profile",
-                        icon = Icons.Default.Person,
-                        onClick = { navController.navigate(com.devx27.app.presentation.navigation.Screen.EditProfile.route) }
+                        title = "Help & FAQs",
+                        icon = Icons.Default.HelpOutline,
+                        onClick = { navController.navigate(com.devx27.app.presentation.navigation.Screen.Help.route) }
                     )
                 }
                 item {
                     ActionSettingItem(
                         title = "Privacy Policy",
                         icon = Icons.Default.PrivacyTip,
-                        onClick = { /* Open web view */ }
+                        onClick = { navController.navigate(com.devx27.app.presentation.navigation.Screen.PrivacyPolicy.route) }
+                    )
+                }
+                item {
+                    ToggleSettingItem(
+                        title = "Crash reporting",
+                        subtitle = "Share anonymized crash reports",
+                        icon = Icons.Default.BugReport,
+                        isEnabled = settings.crashReporting,
+                        onCheckedChange = viewModel::setCrashReporting
+                    )
+                }
+                item {
+                    ActionSettingItem(
+                        title = "Sign Out",
+                        icon = Icons.Default.Logout,
+                        onClick = { viewModel.signOut(navController) }
                     )
                 }
 

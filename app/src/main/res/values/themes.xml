@@ -2,15 +2,15 @@
 <resources>
     <!-- Base app theme (referenced by Manifest) -->
     <style name="Theme.DevX27" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:windowBackground">@android:color/black</item>
-        <item name="android:statusBarColor">@android:color/black</item>
-        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
     </style>
 
-    <!-- Splash screen theme — transparent so Compose takes over immediately -->
+    <!-- Splash screen theme — solid white canvas with centred logo -->
     <style name="Theme.DevX27.SplashScreen" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@android:color/black</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/devx27</item>
+        <item name="windowSplashScreenBackground">@android:color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/devx27_splash</item>
         <item name="postSplashScreenTheme">@style/Theme.DevX27</item>
     </style>
 </resources>

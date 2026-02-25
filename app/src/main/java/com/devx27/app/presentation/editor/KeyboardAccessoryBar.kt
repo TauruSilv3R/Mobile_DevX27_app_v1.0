@@ -2,14 +2,13 @@ package com.devx27.app.presentation.editor
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,7 +39,6 @@ fun KeyboardAccessoryBar(
     var altPressed  by remember { mutableStateOf(false) }
     
     val haptic      = LocalHapticFeedback.current
-    val scrollState = rememberScrollState()
 
     val handleKey: (String) -> Unit = { key ->
         // Subtle haptic like a real keyboard key press
@@ -60,16 +58,34 @@ fun KeyboardAccessoryBar(
         }
     }
 
-    Row(
+    val row1 = listOf("ESC", "CTRL", "ALT", "TAB", "|", "/", "-")
+    val row2 = listOf("HOME", "UP", "DOWN", "LEFT", "RIGHT")
+
+    Column(
         modifier = modifier
             .fillMaxWidth()
             .background(DevX27Theme.colors.surfaceElevated)
-            .padding(vertical = 6.dp, horizontal = 8.dp)
-            .horizontalScroll(scrollState),
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
-        verticalAlignment     = Alignment.CenterVertically
+            .padding(vertical = 6.dp, horizontal = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val keys = listOf("ESC", "CTRL", "ALT", "TAB", "|", "/", "-", "HOME", "UP", "DOWN", "LEFT", "RIGHT")
+        AccessoryRow(row1, ctrlPressed, altPressed, handleKey)
+        AccessoryRow(row2, ctrlPressed, altPressed, handleKey)
+    }
+}
+
+@Composable
+private fun AccessoryRow(
+    keys: List<String>,
+    ctrlPressed: Boolean,
+    altPressed: Boolean,
+    handleKey: (String) -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         keys.forEach { key ->
             val isActive = (key == "CTRL" && ctrlPressed) || (key == "ALT" && altPressed)
             AccessoryKey(

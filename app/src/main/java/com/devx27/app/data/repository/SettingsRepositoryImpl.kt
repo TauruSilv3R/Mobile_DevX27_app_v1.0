@@ -26,7 +26,10 @@ class SettingsRepositoryImpl @Inject constructor(
         val THEME = stringPreferencesKey("theme")
         val NOTIFICATIONS = booleanPreferencesKey("notifications")
         val PREFERRED_LANGUAGE = stringPreferencesKey("preferred_language")
-        val HAPTICS = booleanPreferencesKey("haptics")
+        val CODE_AUTO_SAVE = booleanPreferencesKey("code_auto_save")
+        val CODE_LINE_NUMBERS = booleanPreferencesKey("code_line_numbers")
+        val CODE_VIM_MODE = booleanPreferencesKey("code_vim_mode")
+        val CRASH_REPORTING = booleanPreferencesKey("crash_reporting")
     }
 
     override fun getSettings(): Flow<AppSettings> {
@@ -46,7 +49,10 @@ class SettingsRepositoryImpl @Inject constructor(
                     theme = theme,
                     notificationsEnabled = preferences[PreferencesKeys.NOTIFICATIONS] ?: true,
                     preferredLanguage = preferences[PreferencesKeys.PREFERRED_LANGUAGE] ?: "Python",
-                    hapticsEnabled = preferences[PreferencesKeys.HAPTICS] ?: true
+                    codeAutoSave = preferences[PreferencesKeys.CODE_AUTO_SAVE] ?: true,
+                    codeLineNumbers = preferences[PreferencesKeys.CODE_LINE_NUMBERS] ?: true,
+                    codeVimMode = preferences[PreferencesKeys.CODE_VIM_MODE] ?: false,
+                    crashReporting = preferences[PreferencesKeys.CRASH_REPORTING] ?: true
                 )
             }
     }
@@ -69,9 +75,27 @@ class SettingsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateHaptics(enabled: Boolean) {
+    override suspend fun updateCodeAutoSave(enabled: Boolean) {
         context.dataStore.edit { preferences ->
-            preferences[PreferencesKeys.HAPTICS] = enabled
+            preferences[PreferencesKeys.CODE_AUTO_SAVE] = enabled
+        }
+    }
+
+    override suspend fun updateCodeLineNumbers(enabled: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.CODE_LINE_NUMBERS] = enabled
+        }
+    }
+
+    override suspend fun updateCodeVimMode(enabled: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.CODE_VIM_MODE] = enabled
+        }
+    }
+
+    override suspend fun updateCrashReporting(enabled: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.CRASH_REPORTING] = enabled
         }
     }
 }

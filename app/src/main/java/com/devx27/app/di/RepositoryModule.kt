@@ -8,6 +8,7 @@ import com.devx27.app.data.repository.MockXPRepositoryImpl
 import com.devx27.app.data.repository.SkillTreeRepositoryImpl
 import com.devx27.app.domain.repository.AuthRepository
 import com.devx27.app.domain.repository.BattleRepository
+import com.devx27.app.domain.repository.CodeExecutionRepository
 import com.devx27.app.domain.repository.ChallengeRepository
 import com.devx27.app.domain.repository.ProfileRepository
 import com.devx27.app.domain.repository.SkillTreeRepository
@@ -35,4 +36,5 @@ abstract class RepositoryModule {
     @Binds @Singleton abstract fun bindProfile(impl: MockProfileRepositoryImpl): ProfileRepository
     @Binds @Singleton abstract fun bindBattle(impl: MockBattleRepositoryImpl): BattleRepository
     @Binds @Singleton abstract fun bindSettings(impl: com.devx27.app.data.repository.SettingsRepositoryImpl): com.devx27.app.domain.repository.SettingsRepository
+    @Binds @Singleton abstract fun bindCodeExecution(impl: com.devx27.app.data.repository.Judge0RepositoryImpl): CodeExecutionRepository
 }

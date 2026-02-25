@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material.icons.filled.Forum
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Work
 import androidx.compose.material.icons.filled.SportsMartialArts
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -27,6 +28,7 @@ sealed class Screen(val route: String) {
     data object Leaderboard : Screen("leaderboard")
     data object Forum       : Screen("forum")
     data object Profile     : Screen("profile")
+    data object CareerHub   : Screen("career_hub")
 
     // ── Nested destinations ───────────────────────────────────────────────────
     data object ChallengeDetail : Screen("challenge_detail/{challengeId}") {
@@ -42,6 +44,11 @@ sealed class Screen(val route: String) {
     data object Help        : Screen("help")
     data object Settings    : Screen("settings")
     data object EditProfile : Screen("edit_profile")
+    data object CodeEditorSettings : Screen("code_editor_settings")
+    data object PrivacyPolicy : Screen("privacy_policy")
+    data object CareerJobDetail : Screen("career_job/{jobId}") {
+        fun createRoute(jobId: String) = "career_job/$jobId"
+    }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -59,5 +66,6 @@ val bottomNavItems = listOf(
     BottomNavItem(Screen.Practice,    "Practice",    Icons.Default.Code),
     BottomNavItem(Screen.Leaderboard, "Leaderboard", Icons.Default.EmojiEvents),
     BottomNavItem(Screen.Forum,       "Forum",       Icons.Default.Forum),
+    BottomNavItem(Screen.CareerHub,   "Career Hub",  Icons.Default.Work),
     BottomNavItem(Screen.Profile,     "Profile",     Icons.Default.Person),
 )

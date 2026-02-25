@@ -31,11 +31,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.devx27.app.presentation.theme.DevX27Theme
 
 @Composable
@@ -48,10 +51,34 @@ fun DevX27BottomBar(navController: NavController) {
         enter   = slideInVertically(initialOffsetY = { it }) + fadeIn(),
         exit    = slideOutVertically(targetOffsetY  = { it }) + fadeOut(),
     ) {
+        val currentIndex = bottomNavItems.indexOfFirst { it.screen.route == currentRoute }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(DevX27Theme.colors.bottomBar)
+                .pointerInput(currentIndex) {
+                    var totalDrag = 0f
+                    detectHorizontalDragGestures(
+                        onHorizontalDrag = { _, dragAmount -> totalDrag += dragAmount },
+                        onDragEnd = {
+                            val threshold = 120f
+                            if (totalDrag > threshold && currentIndex > 0) {
+                                navController.navigate(bottomNavItems[currentIndex - 1].screen.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            } else if (totalDrag < -threshold && currentIndex < bottomNavItems.lastIndex) {
+                                navController.navigate(bottomNavItems[currentIndex + 1].screen.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            }
+                            totalDrag = 0f
+                        }
+                    )
+                }
         ) {
             // Hairline divider
             Box(
@@ -76,7 +103,7 @@ fun DevX27BottomBar(navController: NavController) {
                         onClick    = {
                             if (currentRoute != item.screen.route) {
                                 navController.navigate(item.screen.route) {
-                                    popUpTo(navController.graph.startDestinationId) { saveState = true }
+                                    popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                                     launchSingleTop = true
                                     restoreState    = true
                                 }

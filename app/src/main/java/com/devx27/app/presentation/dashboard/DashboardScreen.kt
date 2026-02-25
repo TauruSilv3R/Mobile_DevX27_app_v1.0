@@ -26,7 +26,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bolt
-import androidx.compose.material.icons.filled.HelpOutline
 import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.IconButton
@@ -34,7 +33,6 @@ import com.devx27.app.presentation.navigation.Screen
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import com.devx27.app.R
-import com.devx27.app.presentation.components.ProfileCompletionBanner
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -75,21 +73,15 @@ fun DashboardScreen(
                 .statusBarsPadding()
                 .verticalScroll(rememberScrollState())
         ) {
-        // ── Header ────────────────────────────────────────────────────────────
+        // Ã¢â€â‚¬Ã¢â€â‚¬ Header Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
         DashboardHeader(
             username  = uiState.userProfile?.displayName ?: "Dev",
-            totalXp   = uiState.userProfile?.totalXp ?: 0,
-            onHelpClick = { navController.navigate(Screen.Help.route) }
-        )
-
-        ProfileCompletionBanner(
-            userProfile = uiState.userProfile,
-            onClick = { navController.navigate(Screen.Profile.route) }
+            totalXp   = uiState.userProfile?.totalXp ?: 0
         )
 
         Spacer(Modifier.height(12.dp))
 
-        // ── XP Progress Card ─────────────────────────────────────────────────
+        // Ã¢â€â‚¬Ã¢â€â‚¬ XP Progress Card Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
         XpProgressCard(
             currentXp  = uiState.userProfile?.totalXp ?: 0,
             nextLevelXp = uiState.userProfile?.nextLevelXp ?: 1000,
@@ -98,7 +90,7 @@ fun DashboardScreen(
 
         Spacer(Modifier.height(16.dp))
 
-        // ── Stats Row ─────────────────────────────────────────────────────────
+        // Ã¢â€â‚¬Ã¢â€â‚¬ Stats Row Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
         StatsRow(
             streak   = uiState.weeklyStreak,
             solved   = uiState.userProfile?.challengesSolved ?: 0,
@@ -107,7 +99,7 @@ fun DashboardScreen(
 
         Spacer(Modifier.height(24.dp))
 
-        // ── Daily Missions ───────────────────────────────────────────────────
+        // Ã¢â€â‚¬Ã¢â€â‚¬ Daily Missions Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
         DailyMissionsSection()
 
         Spacer(Modifier.height(32.dp))
@@ -116,7 +108,7 @@ fun DashboardScreen(
 }
 
 @Composable
-private fun DashboardHeader(username: String, totalXp: Int, onHelpClick: () -> Unit) {
+private fun DashboardHeader(username: String, totalXp: Int) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -128,7 +120,12 @@ private fun DashboardHeader(username: String, totalXp: Int, onHelpClick: () -> U
             Image(
                 painter = painterResource(id = R.mipmap.devx27),
                 contentDescription = "Logo",
-                modifier = Modifier.size(50.dp).padding(end = 12.dp).clip(CircleShape)
+                modifier = Modifier
+                    .size(50.dp)
+                    .padding(end = 12.dp)
+                    .clip(CircleShape)
+                    .background(DevX27Theme.colors.surfaceInput),
+                contentScale = ContentScale.Fit
             )
             Column {
                 Text(
@@ -147,17 +144,6 @@ private fun DashboardHeader(username: String, totalXp: Int, onHelpClick: () -> U
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onHelpClick) {
-                Icon(
-                    imageVector = Icons.Default.HelpOutline,
-                    contentDescription = "Help",
-                    tint = DevX27Theme.colors.onSurfaceMuted,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-            
-            Spacer(Modifier.width(8.dp))
-
             // XP badge with Gradient
             Box(
                 modifier          = Modifier
@@ -272,9 +258,9 @@ private fun StatsRow(streak: Int, solved: Int, rank: Int) {
             .padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        StatCard(Modifier.weight(1f), "🔥 Streak", "$streak days", DevX27Theme.colors.xpWarning)
-        StatCard(Modifier.weight(1f), "💎 Solved",  "$solved",      DevX27Theme.colors.xpSuccess)
-        StatCard(Modifier.weight(1f), "🏆 Rank",   if (rank > 0) "#$rank" else "—", DevX27Theme.colors.xpGold)
+        StatCard(Modifier.weight(1f), "Ã°Å¸â€Â¥ Streak", "$streak days", DevX27Theme.colors.xpWarning)
+        StatCard(Modifier.weight(1f), "Ã°Å¸â€™Å½ Solved",  "$solved",      DevX27Theme.colors.xpSuccess)
+        StatCard(Modifier.weight(1f), "Ã°Å¸Ââ€  Rank",   if (rank > 0) "#$rank" else "Ã¢â‚¬â€", DevX27Theme.colors.xpGold)
     }
 }
 
@@ -315,7 +301,7 @@ private fun DailyMissionsSection() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text("🎯", fontSize = 32.sp)
+                Text("Ã°Å¸Å½Â¯", fontSize = 32.sp)
                 Text(
                     "Solve problems to unlock daily missions!",
                     fontSize = 14.sp,

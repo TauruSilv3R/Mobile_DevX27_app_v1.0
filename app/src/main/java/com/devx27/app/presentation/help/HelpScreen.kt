@@ -44,11 +44,20 @@ fun HelpScreen(navController: NavController) {
             )
         ),
         HelpSection(
-            title = "Battle Arena",
-            icon = Icons.Default.SportsMartialArts,
+            title = "Practice & Challenges",
+            icon = Icons.Default.CheckCircle,
             items = listOf(
-                HelpItem("Finding a Match", "Tap 'Search' in Compete mode. We'll pair you with an opponent of similar skill level."),
-                HelpItem("Winning a Battle", "Passed all test cases before your opponent to win. Speed is key!")
+                HelpItem("Filtering problems", "Use difficulty chips and search to narrow challenges. Progress is saved automatically."),
+                HelpItem("XP and streaks", "Solving any challenge adds XP; daily solves keep your streak alive and boost rewards.")
+            )
+        ),
+        HelpSection(
+            title = "Career Hub",
+            icon = Icons.Default.Work,
+            items = listOf(
+                HelpItem("Browsing jobs", "Open Career Hub from the bottom bar to see posted roles. Tap any job to view details."),
+                HelpItem("Applying", "Use the Apply button in a job detail to follow the employer's link or instructions."),
+                HelpItem("Staying updated", "Jobs refresh when you reopen the tab; more filters are coming soon.")
             )
         ),
         HelpSection(
@@ -56,7 +65,8 @@ fun HelpScreen(navController: NavController) {
             icon = Icons.Default.Security,
             items = listOf(
                 HelpItem("Is my data local?", "Currently, your data is stored locally on this device. Cloud sync is coming in Phase 5."),
-                HelpItem("Contact Support", "For technical issues, reach out to support@devx27.com")
+                HelpItem("Contact Support", "For technical issues, reach out to support@devx27.com"),
+                HelpItem("Google sign-in", "You can use the Google button on Login or Sign Up; OAuth wiring is coming soon.")
             )
         )
     )
@@ -97,7 +107,14 @@ fun HelpScreen(navController: NavController) {
                 shape = RoundedCornerShape(12.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = DevX27Theme.colors.xpSuccess,
-                    unfocusedBorderColor = DevX27Theme.colors.divider
+                    unfocusedBorderColor = DevX27Theme.colors.divider,
+                    focusedTextColor = DevX27Theme.colors.onBackground,
+                    unfocusedTextColor = DevX27Theme.colors.onBackground,
+                    cursorColor = DevX27Theme.colors.onBackground,
+                    focusedLabelColor = DevX27Theme.colors.onBackground,
+                    unfocusedLabelColor = DevX27Theme.colors.onSurfaceMuted,
+                    focusedPlaceholderColor = DevX27Theme.colors.onSurfaceSubtle,
+                    unfocusedPlaceholderColor = DevX27Theme.colors.onSurfaceSubtle
                 )
             )
 

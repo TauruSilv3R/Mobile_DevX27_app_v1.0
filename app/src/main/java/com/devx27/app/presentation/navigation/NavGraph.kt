@@ -29,6 +29,10 @@ import com.devx27.app.presentation.dashboard.DashboardScreen
 import com.devx27.app.presentation.editor.CodeEditorScreen
 import com.devx27.app.presentation.help.HelpScreen
 import com.devx27.app.presentation.leaderboard.LeaderboardScreen
+import com.devx27.app.presentation.careerhub.CareerHubScreen
+import com.devx27.app.presentation.careerhub.CareerJobDetailScreen
+import com.devx27.app.presentation.legal.PrivacyPolicyScreen
+import com.devx27.app.presentation.settings.CodeEditorSettingsScreen
 import com.devx27.app.presentation.practice.PracticeScreen
 import com.devx27.app.presentation.profile.EditProfileScreen
 import com.devx27.app.presentation.profile.ProfileScreen
@@ -58,6 +62,7 @@ fun DevX27NavGraph(
         Screen.Practice.route,
         Screen.Leaderboard.route,
         Screen.Forum.route,
+        Screen.CareerHub.route,
         Screen.Profile.route
     )
 
@@ -101,6 +106,7 @@ fun DevX27NavGraph(
             composable(Screen.Compete.route)     { CompeteScreen(navController) }
             composable(Screen.Leaderboard.route) { LeaderboardScreen(navController) }
             composable(Screen.Forum.route)       { ForumScreen(navController) }
+            composable(Screen.CareerHub.route)   { CareerHubScreen(navController) }
             composable(Screen.Profile.route)     { ProfileScreen(navController) }
 
             // ── Nested destinations ───────────────────────────────────────────
@@ -123,6 +129,15 @@ fun DevX27NavGraph(
             composable(Screen.Help.route)        { HelpScreen(navController) }
             composable(Screen.Settings.route)    { SettingsScreen(navController) }
             composable(Screen.EditProfile.route) { EditProfileScreen(navController) }
+            composable(Screen.CodeEditorSettings.route) { CodeEditorSettingsScreen(navController) }
+            composable(Screen.PrivacyPolicy.route) { PrivacyPolicyScreen(navController) }
+            composable(
+                route = Screen.CareerJobDetail.route,
+                arguments = listOf(navArgument("jobId") { type = NavType.StringType })
+            ) { backStack ->
+                val jobId = backStack.arguments?.getString("jobId") ?: return@composable
+                CareerJobDetailScreen(navController, jobId)
+            }
         }
     }
 }

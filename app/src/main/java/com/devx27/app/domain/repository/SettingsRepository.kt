@@ -9,5 +9,8 @@ interface SettingsRepository {
     suspend fun updateTheme(theme: AppTheme)
     suspend fun updateNotifications(enabled: Boolean)
     suspend fun updatePreferredLanguage(language: String)
-    suspend fun updateHaptics(enabled: Boolean)
+    suspend fun updateCodeAutoSave(enabled: Boolean)
+    suspend fun updateCodeLineNumbers(enabled: Boolean)
+    suspend fun updateCodeVimMode(enabled: Boolean)
+    suspend fun updateCrashReporting(enabled: Boolean)
 }

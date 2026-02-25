@@ -8,5 +8,10 @@ data class AppSettings(
     val theme: AppTheme = AppTheme.SYSTEM,
     val notificationsEnabled: Boolean = true,
     val preferredLanguage: String = "Python",
-    val hapticsEnabled: Boolean = true
+    // Code editor preferences
+    val codeAutoSave: Boolean = true,
+    val codeLineNumbers: Boolean = true,
+    val codeVimMode: Boolean = false,
+    // App-level preferences
+    val crashReporting: Boolean = true
 )

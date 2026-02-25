@@ -14,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val authRepository: com.devx27.app.domain.repository.AuthRepository
 ) : ViewModel() {
 
     val settings: StateFlow<AppSettings> = settingsRepository.getSettings()
@@ -42,9 +43,36 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun setHapticsEnabled(enabled: Boolean) {
+    fun setCodeAutoSave(enabled: Boolean) {
         viewModelScope.launch {
-            settingsRepository.updateHaptics(enabled)
+            settingsRepository.updateCodeAutoSave(enabled)
+        }
+    }
+
+    fun setCodeLineNumbers(enabled: Boolean) {
+        viewModelScope.launch {
+            settingsRepository.updateCodeLineNumbers(enabled)
+        }
+    }
+
+    fun setCodeVimMode(enabled: Boolean) {
+        viewModelScope.launch {
+            settingsRepository.updateCodeVimMode(enabled)
+        }
+    }
+
+    fun setCrashReporting(enabled: Boolean) {
+        viewModelScope.launch {
+            settingsRepository.updateCrashReporting(enabled)
+        }
+    }
+
+    fun signOut(navController: androidx.navigation.NavController) {
+        viewModelScope.launch {
+            authRepository.signOut()
+            navController.navigate(com.devx27.app.presentation.navigation.Screen.Login.route) {
+                popUpTo(0) { inclusive = true }
+            }
         }
     }
 }

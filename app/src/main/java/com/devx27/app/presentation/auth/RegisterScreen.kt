@@ -30,6 +30,19 @@ fun RegisterScreen(
     var password by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
     val uiState by viewModel.uiState.collectAsState()
+    val textFieldColors = OutlinedTextFieldDefaults.colors(
+        focusedTextColor = DevX27Theme.colors.onBackground,
+        unfocusedTextColor = DevX27Theme.colors.onBackground,
+        focusedBorderColor = DevX27Theme.colors.actionColor,
+        unfocusedBorderColor = DevX27Theme.colors.divider,
+        focusedLabelColor = DevX27Theme.colors.onBackground,
+        unfocusedLabelColor = DevX27Theme.colors.onSurfaceMuted,
+        cursorColor = DevX27Theme.colors.actionColor,
+        focusedContainerColor = DevX27Theme.colors.surfaceInput,
+        unfocusedContainerColor = DevX27Theme.colors.surfaceInput,
+        focusedPlaceholderColor = DevX27Theme.colors.onSurfaceSubtle,
+        unfocusedPlaceholderColor = DevX27Theme.colors.onSurfaceSubtle,
+    )
 
     LaunchedEffect(uiState.isSuccess) {
         if (uiState.isSuccess) {
@@ -74,12 +87,7 @@ fun RegisterScreen(
                 label = { Text("Display Name") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = DevX27Theme.colors.xpSuccess,
-                    unfocusedBorderColor = DevX27Theme.colors.divider,
-                    focusedLabelColor = DevX27Theme.colors.xpSuccess,
-                    cursorColor = DevX27Theme.colors.xpSuccess
-                )
+                colors = textFieldColors
             )
 
             OutlinedTextField(
@@ -88,12 +96,7 @@ fun RegisterScreen(
                 label = { Text("Email") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = DevX27Theme.colors.xpSuccess,
-                    unfocusedBorderColor = DevX27Theme.colors.divider,
-                    focusedLabelColor = DevX27Theme.colors.xpSuccess,
-                    cursorColor = DevX27Theme.colors.xpSuccess
-                )
+                colors = textFieldColors
             )
 
             OutlinedTextField(
@@ -103,12 +106,7 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = DevX27Theme.colors.xpSuccess,
-                    unfocusedBorderColor = DevX27Theme.colors.divider,
-                    focusedLabelColor = DevX27Theme.colors.xpSuccess,
-                    cursorColor = DevX27Theme.colors.xpSuccess
-                )
+                colors = textFieldColors
             )
 
             if (uiState.error != null) {
@@ -141,6 +139,27 @@ fun RegisterScreen(
 
             TextButton(onClick = { navController.popBackStack() }) {
                 Text("Already have an account? Sign In", color = DevX27Theme.colors.xpSuccess)
+            }
+
+            OutlinedButton(
+                onClick = { /* TODO: implement Google OAuth */ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(12.dp),
+                border = ButtonDefaults.outlinedButtonBorder.copy(width = 1.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Google",
+                    tint = DevX27Theme.colors.onBackground
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    "Sign up with Google",
+                    color = DevX27Theme.colors.onBackground,
+                    fontWeight = FontWeight.SemiBold
+                )
             }
         }
     }

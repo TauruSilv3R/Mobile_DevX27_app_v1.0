@@ -7,14 +7,16 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devx27.app.domain.repository.SettingsRepository
 import com.devx27.app.domain.repository.SubmissionResult
 import com.devx27.app.domain.repository.ChallengeRepository
+import com.devx27.app.domain.repository.CodeExecutionRepository
 import com.devx27.app.domain.usecase.SubmitSolutionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -37,6 +39,8 @@ data class CodeEditorUiState(
 class CodeEditorViewModel @Inject constructor(
     private val submitSolutionUseCase: SubmitSolutionUseCase,
     private val challengeRepository: ChallengeRepository,
+    private val settingsRepository: SettingsRepository,
+    private val codeExecutionRepository: CodeExecutionRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -45,7 +49,15 @@ class CodeEditorViewModel @Inject constructor(
 
     init {
         val challengeId = savedStateHandle.get<String>("challengeId") ?: ""
-        loadChallenge(challengeId)
+        viewModelScope.launch {
+            val preferred = settingsRepository.getSettings().first().preferredLanguage
+            val preferredLang = preferred.toLanguage()
+            _uiState.value = _uiState.value.copy(
+                language = preferredLang,
+                code = TextFieldValue(getStarterCode(preferredLang))
+            )
+            loadChallenge(challengeId)
+        }
     }
 
     private fun loadChallenge(id: String) {
@@ -86,12 +98,28 @@ class CodeEditorViewModel @Inject constructor(
 
     fun onRun() {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isRunning = true, runOutput = null)
-            delay(600) // Simulate local execution
-            _uiState.value = _uiState.value.copy(
-                isRunning  = false,
-                runOutput  = "✅ Test cases passed: 2 / 3",
-            )
+            _uiState.value = _uiState.value.copy(isRunning = true, runOutput = null, error = null)
+            try {
+                val result = codeExecutionRepository.runCode(
+                    code = _uiState.value.code.text,
+                    language = _uiState.value.language
+                )
+                val output = listOfNotNull(
+                    result.stdout?.let { "Output:\n$it" },
+                    result.stderr?.let { "Stderr:\n$it" },
+                    result.compileOutput?.let { "Compile:\n$it" }
+                ).joinToString("\n\n").ifBlank { "Status: ${result.status}" }
+
+                _uiState.value = _uiState.value.copy(
+                    isRunning = false,
+                    runOutput = output
+                )
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(
+                    isRunning = false,
+                    runOutput = "Execution failed: ${e.message}"
+                )
+            }
         }
     }
 
@@ -194,5 +222,14 @@ class CodeEditorViewModel @Inject constructor(
             |// --- Test ---
             |console.log(solution([1, 2, 3]));
         """.trimMargin()
+    }
+
+    private fun String.toLanguage(): SyntaxHighlighter.Language = when (lowercase()) {
+        "python" -> SyntaxHighlighter.Language.PYTHON
+        "kotlin" -> SyntaxHighlighter.Language.KOTLIN
+        "cpp", "c++" -> SyntaxHighlighter.Language.CPP
+        "java" -> SyntaxHighlighter.Language.JAVA
+        "javascript", "js" -> SyntaxHighlighter.Language.JAVASCRIPT
+        else -> SyntaxHighlighter.Language.PYTHON
     }
 }

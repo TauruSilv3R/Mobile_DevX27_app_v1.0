@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RectangleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bolt
@@ -46,97 +47,83 @@ import androidx.navigation.NavController
 import com.devx27.app.domain.model.Challenge
 import com.devx27.app.domain.model.Difficulty
 import com.devx27.app.presentation.navigation.Screen
-import com.devx27.app.presentation.components.ProfileCompletionBanner
-import com.devx27.app.presentation.dashboard.DashboardViewModel
-import com.devx27.app.presentation.theme.*
+import com.devx27.app.presentation.theme.DevX27Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PracticeScreen(
     navController: NavController,
     viewModel: PracticeViewModel = hiltViewModel(),
-    dashboardViewModel: DashboardViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val dashState by dashboardViewModel.uiState.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize().background(DevX27Theme.colors.background)) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .statusBarsPadding()
-        ) {
-        // Header
-        Text(
-            text       = "Practice",
-            fontSize   = 28.sp,
-            fontWeight = FontWeight.Black,
-            color      = DevX27Theme.colors.onBackground,
-            modifier   = Modifier.padding(horizontal = 20.dp, vertical = 20.dp),
-        )
-
-        ProfileCompletionBanner(
-            userProfile = dashState.userProfile,
-            onClick = { navController.navigate(Screen.Profile.route) }
-        )
-
-        // Search
-        OutlinedTextField(
-            value         = uiState.searchQuery,
-            onValueChange = viewModel::onSearchQueryChange,
-            placeholder   = { Text("Search challenges…", color = DevX27Theme.colors.onSurfaceSubtle) },
-            leadingIcon   = { Icon(Icons.Default.Search, null, tint = DevX27Theme.colors.onSurfaceMuted) },
-            modifier      = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            shape  = RoundedCornerShape(12.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor   = DevX27Theme.colors.actionColor,
-                unfocusedBorderColor = DevX27Theme.colors.divider,
-                focusedTextColor     = DevX27Theme.colors.onBackground,
-                unfocusedTextColor   = DevX27Theme.colors.onBackground,
-                cursorColor          = DevX27Theme.colors.actionColor,
-            ),
-            singleLine = true,
-        )
-
-        Spacer(Modifier.height(12.dp))
-
-        // Difficulty filter chips
-        LazyRow(
-            contentPadding        = PaddingValues(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            item {
-                DifficultyChip(label = "All", isSelected = uiState.selectedDifficulty == null) {
-                    viewModel.onDifficultySelected(null)
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(DevX27Theme.colors.background)
+            .statusBarsPadding(),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(0.dp)
+    ) {
+        item {
+            Text(
+                text       = "Practice",
+                fontSize   = 28.sp,
+                fontWeight = FontWeight.Black,
+                color      = DevX27Theme.colors.onBackground,
+                modifier   = Modifier.padding(vertical = 20.dp),
+            )
+        }
+        item {
+            OutlinedTextField(
+                value         = uiState.searchQuery,
+                onValueChange = viewModel::onSearchQueryChange,
+                placeholder   = { Text("Search challenges...", color = DevX27Theme.colors.onSurfaceSubtle) },
+                leadingIcon   = { Icon(Icons.Default.Search, null, tint = DevX27Theme.colors.onSurfaceMuted) },
+                modifier      = Modifier
+                    .fillMaxWidth(),
+                shape  = RoundedCornerShape(12.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor   = DevX27Theme.colors.actionColor,
+                    unfocusedBorderColor = DevX27Theme.colors.divider,
+                    focusedTextColor     = DevX27Theme.colors.onBackground,
+                    unfocusedTextColor   = DevX27Theme.colors.onBackground,
+                    cursorColor          = DevX27Theme.colors.actionColor,
+                ),
+                singleLine = true,
+            )
+        }
+        item { Spacer(Modifier.height(12.dp)) }
+        item {
+            LazyRow(
+                contentPadding        = PaddingValues(horizontal = 0.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                item {
+                    DifficultyChip(label = "All", isSelected = uiState.selectedDifficulty == null) {
+                        viewModel.onDifficultySelected(null)
+                    }
+                }
+                items(Difficulty.entries) { diff ->
+                    DifficultyChip(
+                        label      = diff.label,
+                        isSelected = uiState.selectedDifficulty == diff,
+                        color      = diff.color,
+                    ) { viewModel.onDifficultySelected(diff) }
                 }
             }
-            items(Difficulty.entries) { diff ->
-                DifficultyChip(
-                    label      = diff.label,
-                    isSelected = uiState.selectedDifficulty == diff,
-                    color      = diff.color,
-                ) { viewModel.onDifficultySelected(diff) }
-            }
         }
+        item { Spacer(Modifier.height(12.dp)) }
 
-        Spacer(Modifier.height(12.dp))
-
-        // Challenge list
-        LazyColumn(
-            contentPadding        = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-            verticalArrangement   = Arrangement.spacedBy(10.dp),
-        ) {
-            items(uiState.filteredChallenges, key = { it.id }) { challenge ->
-                val isSolved = uiState.solvedChallengeIds.contains(challenge.id)
-                ChallengeCard(challenge = challenge, isSolved = isSolved, onClick = {
-                    navController.navigate(Screen.CodeEditor.createRoute(challenge.id))
-                })
-            }
+        items(uiState.filteredChallenges, key = { it.id }) { challenge ->
+            val isSolved = uiState.solvedChallengeIds.contains(challenge.id)
+            ChallengeCard(
+                challenge = challenge,
+                isSolved = isSolved,
+                onClick = { navController.navigate(Screen.CodeEditor.createRoute(challenge.id)) }
+            )
         }
     }
-}
 }
 
 @Composable
@@ -146,6 +133,7 @@ private fun DifficultyChip(
     color: androidx.compose.ui.graphics.Color = DevX27Theme.colors.onBackground,
     onClick: () -> Unit,
 ) {
+    val labelColor = if (DevX27Theme.colors.isDark) DevX27Theme.colors.onSurface else DevX27Theme.colors.onBackground
     FilterChip(
         selected = isSelected,
         onClick  = onClick,
@@ -154,7 +142,7 @@ private fun DifficultyChip(
             selectedContainerColor   = color.copy(alpha = 0.2f),
             selectedLabelColor       = color,
             containerColor           = DevX27Theme.colors.surface,
-            labelColor               = DevX27Theme.colors.onSurfaceMuted,
+            labelColor               = labelColor,
         ),
         border = FilterChipDefaults.filterChipBorder(
             enabled          = true,
@@ -173,7 +161,7 @@ private fun ChallengeCard(challenge: Challenge, isSolved: Boolean, onClick: () -
             .fillMaxWidth()
             .clickable(onClick = onClick),
         colors  = CardDefaults.cardColors(containerColor = DevX27Theme.colors.surface),
-        shape   = RoundedCornerShape(14.dp),
+        shape   = RectangleShape,
     ) {
         Row(
             modifier              = Modifier.padding(16.dp),
@@ -181,13 +169,6 @@ private fun ChallengeCard(challenge: Challenge, isSolved: Boolean, onClick: () -
             verticalAlignment     = Alignment.CenterVertically,
         ) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                // Category Icon
-                Text(
-                    text = getCategoryIcon(challenge.category),
-                    fontSize = 20.sp,
-                    modifier = Modifier.padding(bottom = 2.dp)
-                )
-
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = challenge.title,
@@ -245,19 +226,6 @@ private fun ChallengeCard(challenge: Challenge, isSolved: Boolean, onClick: () -
                 }
             }
         }
-    }
-}
-
-private fun getCategoryIcon(category: String): String {
-    return when (category.lowercase()) {
-        "arrays" -> "📦"
-        "strings" -> "🔤"
-        "math" -> "🔢"
-        "trees" -> "🌳"
-        "graphs" -> "🕸️"
-        "dynamic programming", "dp" -> "🧬"
-        "stack", "queue" -> "📚"
-        else -> "💻"
     }
 }
 

@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.HelpOutline
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,6 +32,19 @@ fun LoginScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val uiState by viewModel.uiState.collectAsState()
+    val textFieldColors = OutlinedTextFieldDefaults.colors(
+        focusedTextColor = DevX27Theme.colors.onBackground,
+        unfocusedTextColor = DevX27Theme.colors.onBackground,
+        focusedBorderColor = DevX27Theme.colors.actionColor,
+        unfocusedBorderColor = DevX27Theme.colors.divider,
+        focusedLabelColor = DevX27Theme.colors.onBackground,
+        unfocusedLabelColor = DevX27Theme.colors.onSurfaceMuted,
+        cursorColor = DevX27Theme.colors.actionColor,
+        focusedContainerColor = DevX27Theme.colors.surfaceInput,
+        unfocusedContainerColor = DevX27Theme.colors.surfaceInput,
+        focusedPlaceholderColor = DevX27Theme.colors.onSurfaceSubtle,
+        unfocusedPlaceholderColor = DevX27Theme.colors.onSurfaceSubtle,
+    )
 
     LaunchedEffect(uiState.isSuccess) {
         if (uiState.isSuccess) {
@@ -45,17 +57,6 @@ fun LoginScreen(
     Box(
         modifier = Modifier.fillMaxSize().background(DevX27Theme.colors.background).imePadding()
     ) {
-        IconButton(
-            onClick = { navController.navigate(Screen.Help.route) },
-            modifier = Modifier.align(Alignment.TopEnd).padding(16.dp).statusBarsPadding()
-        ) {
-            Icon(
-                imageVector = Icons.Default.HelpOutline,
-                contentDescription = "Help",
-                tint = DevX27Theme.colors.onSurfaceMuted
-            )
-        }
-
         Column(
             modifier = Modifier.fillMaxWidth().padding(32.dp).align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -87,12 +88,7 @@ fun LoginScreen(
                 label = { Text("Email") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = DevX27Theme.colors.xpSuccess,
-                    unfocusedBorderColor = DevX27Theme.colors.divider,
-                    focusedLabelColor = DevX27Theme.colors.xpSuccess,
-                    cursorColor = DevX27Theme.colors.xpSuccess
-                )
+                colors = textFieldColors
             )
 
             OutlinedTextField(
@@ -102,12 +98,7 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = DevX27Theme.colors.xpSuccess,
-                    unfocusedBorderColor = DevX27Theme.colors.divider,
-                    focusedLabelColor = DevX27Theme.colors.xpSuccess,
-                    cursorColor = DevX27Theme.colors.xpSuccess
-                )
+                colors = textFieldColors
             )
 
             if (uiState.error != null) {
@@ -140,6 +131,27 @@ fun LoginScreen(
 
             TextButton(onClick = { navController.navigate(Screen.Register.route) }) {
                 Text("Don't have an account? Sign Up", color = DevX27Theme.colors.xpSuccess)
+            }
+
+            OutlinedButton(
+                onClick = { /* TODO: implement Google OAuth */ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(12.dp),
+                border = ButtonDefaults.outlinedButtonBorder.copy(width = 1.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Google",
+                    tint = DevX27Theme.colors.onBackground
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    "Continue with Google",
+                    color = DevX27Theme.colors.onBackground,
+                    fontWeight = FontWeight.SemiBold
+                )
             }
         }
     }
